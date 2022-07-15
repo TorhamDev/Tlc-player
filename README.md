@@ -15,7 +15,8 @@ python3 tlc.py <music-path>
 - [X] Create Core
 - [X] Create Info utils
 - [ ] Complete Readme
-- [ ] Create main player file
+- [X] Create main player file
+- [ ] Improve main player
 - [ ] Improve Core
 - [ ] Improve Info utils
 
