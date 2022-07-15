@@ -28,8 +28,8 @@ class Player(object):
             if count >= 1000:
                 print("Unable to play media")
                 exit()
-
             count += 1
+
         self.is_played = True
         self.is_paused = False
         return True
@@ -67,8 +67,11 @@ class Player(object):
         return self.media_player.get_time()
 
     def get_total_media_time(self):
-        time_secs = self.media_load_info.info.time_secs
-        return str(datetime.timedelta(seconds=time_secs)).split('.')[0]
+        try:
+            time_secs = self.media_load_info.info.time_secs
+            return str(datetime.timedelta(seconds=time_secs)).split('.')[0]
+        except AttributeError:
+            return "00:00:00"
 
     def get_total_media_time_as_seconds(self):
         return self.media_load_info.info.time_secs
