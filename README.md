@@ -17,7 +17,7 @@ python3 tlc.py <music-path>
 - [ ] Complete Readme
 - [X] Create main player file
 - [ ] Improve main player
-- [ ] Improve Core
+- [X] Improve Core
 - [ ] Improve Info utils
 - [ ] Create Controller for puase and play and stop and seek
 
