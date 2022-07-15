@@ -11,6 +11,9 @@ parser = OptionParser()
 console = Console()
 
 # create player obj and show media info
+if len(args) == 0:
+    print("[bold red]You must specify a path to file like:[/bold red][blue] python tlc.py ~/Music/something.mp3[/blue]")
+    quit()
 player = Player(args[0])
 show_track_info(player.media_load_info, player.tag)
 player.play()
