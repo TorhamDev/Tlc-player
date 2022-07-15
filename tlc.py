@@ -17,13 +17,10 @@ player.play()
 
 
 def get_status_data():
-
     current_time = player.get_current_playtime()
-
     if player.is_played:
         symbol_play = u"\u25b6"
-    else:
-        symbol_play = u"\u23f8"
+    symbol_play = u"\u23f8"
 
     return f"[bold green]{current_time} <=> {player.get_total_media_time()} " + symbol_play
 
@@ -35,6 +32,6 @@ def main():
                 sleep(0.6)
                 status.update(get_status_data())
     except KeyboardInterrupt:
-        print('Bay :vulcan_salute:')
+        print('Bye! :vulcan_salute:')
 
 main()
