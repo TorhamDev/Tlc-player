@@ -4,8 +4,10 @@ from Player.info import show_track_info
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
+from utils import clear_terminal
 import os
 
+clear_terminal()
 parser = OptionParser()
 (options, args) = parser.parse_args()
 
@@ -79,6 +81,7 @@ if __name__ == "__main__":
     if os.path.isdir(args[0]):
         tracks = handle_dirs(args[0])
         for track in tracks:
+            clear_terminal()
             player = Player(track)
             show_track_info(
                 player.media_load_info,
