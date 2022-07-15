@@ -30,11 +30,14 @@ def main():
     try:
         with console.status(get_status_data()) as status:
             while player.is_played:
+                player.check_status()
+                #print(player.is_played)
                 sleep(0.6)
                 status.update(get_status_data())
     except KeyboardInterrupt:
         print('Bye! :vulcan_salute:')
-        sys.exit(1) 
+        sys.exit(1)
+
 if __name__ == "__main__":
     # create player obj and show media info
     if os.path.isdir(args[0]): 
