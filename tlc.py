@@ -10,8 +10,8 @@ parser = OptionParser()
 console = Console()
 
 def handle_dirs(path:str):
-    tracks = os.listdir(path)
-    sorted(tracks)
+    tracks = [os.path.join(path,i) for i in os.listdir(path)]
+    tracks = [i for i in filter(lambda x: x if os.path.isdir(x) else None,tracks)] # To remove possible dirs
     return tracks
 
 def get_status_data():
