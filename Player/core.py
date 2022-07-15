@@ -41,9 +41,9 @@ class Player(object):
         return True
 
     def check_status(self):
-        playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0
+        playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0  # noqa
         if self.media_player.is_playing() == 1 or not playtime_check:
-            playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0
+            playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0  # noqa
             self.is_played = True
             self.is_stoped = False
         else:

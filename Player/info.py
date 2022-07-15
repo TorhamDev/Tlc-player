@@ -5,14 +5,14 @@ import datetime
 terminal_column = get_terminal_size().columns
 
 
-def show_track_info(load_info_obj, tag,additional_info):
+def show_track_info(load_info_obj, tag, additional_info):
 
     load_info = load_info_obj
 
     print(Panel(f"[dark_orange]{tag.title}[/dark_orange]".center(int(terminal_column)+25), title="Track Name"))  # noqa
 
     track_information = ''
-    track_information += additional_info+"\n" #noqa
+    track_information += additional_info+"\n"  # noqa
     track_information += "[deep_pink4]Track Artist[/deep_pink4]:   {}\n".format(tag.artist)  # noqa
     track_information += "[deep_pink4]Track Album[/deep_pink4]:    {}\n".format(tag.album)  # noqa
     track_information += "[deep_pink4]Track Duration[/deep_pink4]: {}\n".format(str(datetime.timedelta(seconds=load_info.info.time_secs)).split('.')[0])  # noqa
