@@ -1,5 +1,9 @@
-# Tlc-player
-Terminal based player with Vlc Core
+# TLC-player
+Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
+
+# Running
+* Run TLC with :
+`tlc <music-path>`
 
 # TODO
 - [X] Create Core
@@ -8,3 +12,6 @@ Terminal based player with Vlc Core
 - [ ] Create main player file
 - [ ] Improve Core
 - [ ] Improve Info utils
+
+# License
+This project is licensed under the MIT license found in the LICENSE file in the root directory of this repository.
