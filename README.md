@@ -14,11 +14,13 @@ python3 tlc.py <music-path>
 # TODO
 - [X] Create Core
 - [X] Create Info utils
-- [ ] Complete Readme
 - [X] Create main player file
-- [ ] Improve main player
+- [X] Improve main player
 - [X] Improve Core
-- [ ] Improve Info utils
+- [X] Improve Info utils
+- [ ] Complete Readme
+- [ ] Add music play number in dir input
+- [ ] Add keyboard shortcut handler (pause, play, next ..)
 
 # License
 This project is licensed under the MIT license found in the LICENSE file in the root directory of this repository.
