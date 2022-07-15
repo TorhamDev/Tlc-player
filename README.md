@@ -7,7 +7,7 @@ Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
 pip3 install -r requirements.txt
 ```
 2. Run TLC with :
-```bash 
+```bash
 python3 tlc.py <music-path>
 ```
 
@@ -19,6 +19,7 @@ python3 tlc.py <music-path>
 - [ ] Improve main player
 - [ ] Improve Core
 - [ ] Improve Info utils
+- [ ] Create Controller for puase and play and stop and seek
 
 # License
 This project is licensed under the MIT license found in the LICENSE file in the root directory of this repository.
