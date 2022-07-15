@@ -11,19 +11,6 @@ parser = OptionParser()
 (options, args) = parser.parse_args()
 
 console = Console()
-
-
-# create player obj and show media info
-if len(args) == 0:
-    print("[bold red]You must specify a path to file like:[/bold red][blue] python tlc.py ~/Music/something.mp3[/blue]")
-    quit()
-
-
-player = Player(args[0])
-show_track_info(player.media_load_info, player.tag)
-player.play()
-
-
 def handle_dirs(path: str):
     tracks = [os.path.join(path, i) for i in os.listdir(path)]
     tracks = [i for i in filter(lambda x: x if os.path.isfile(
