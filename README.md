@@ -2,8 +2,14 @@
 Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
 
 # Running
-* Run TLC with :
-`tlc <music-path>`
+1. Installing dependencies :
+```bash
+pip3 install -r requirements.txt
+```
+2. Run TLC with :
+```bash 
+python3 tlc.py <music-path>
+```
 
 # TODO
 - [X] Create Core
