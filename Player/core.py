@@ -30,7 +30,6 @@ class Player(object):
                 exit()
 
             count += 1
-
         self.is_played = True
         self.is_paused = False
         return True
@@ -40,6 +39,16 @@ class Player(object):
         self.is_paused = True
         self.is_played = False
         return True
+
+    def check_status(self):
+        playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0
+        if self.media_player.is_playing() == 1 or not playtime_check:
+            playtime_check = int(self.get_current_playtime().split(':')[-1]) > 0
+            self.is_played = True
+            self.is_stoped = False
+        else:
+            self.is_played = False
+            self.is_stoped = True
 
     def done(self):
         self.media_player.stop()

@@ -24,3 +24,4 @@ python3 tlc.py <music-path>
 This project is licensed under the MIT license found in the LICENSE file in the root directory of this repository.
 
 Version : Alpha
+
