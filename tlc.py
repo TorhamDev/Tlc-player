@@ -4,6 +4,7 @@ from Player.info import show_track_info
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
+import os
 parser = OptionParser()
 (options, args) = parser.parse_args()
 
@@ -11,7 +12,7 @@ console = Console()
 
 def handle_dirs(path:str):
     tracks = [os.path.join(path,i) for i in os.listdir(path)]
-    tracks = [i for i in filter(lambda x: x if os.path.isdir(x) else None,tracks)] # To remove possible dirs
+    tracks = [i for i in filter(lambda x: x if os.path.isfile(x) else None,tracks)] # To remove possible dirs
     return tracks
 
 def get_status_data():
@@ -31,14 +32,14 @@ def main():
                 status.update(get_status_data())
     except KeyboardInterrupt:
         print('Bye! :vulcan_salute:')
-
+        
 if __name__ == "__main__":
     # create player obj and show media info
-    if os.path.isdir(args[0]):
+    if os.path.isdir(args[0]): 
         tracks = handle_dirs(args[0])
         additional_info = f"[deep_pink4]{args[0]}[/deep_pink4]"
         for track in tracks:
-            player = Player(args[0])
+            player = Player(track)
             show_track_info(player.media_load_info, player.tag,additional_info)
             player.play()
             main()
