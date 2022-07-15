@@ -10,12 +10,6 @@ parser = OptionParser()
 
 console = Console()
 
-# create player obj and show media info
-player = Player(args[0])
-show_track_info(player.media_load_info, player.tag)
-player.play()
-
-
 def get_status_data():
     current_time = player.get_current_playtime()
     if player.is_played:
@@ -34,4 +28,9 @@ def main():
     except KeyboardInterrupt:
         print('Bye! :vulcan_salute:')
 
-main()
+if __name__ == "__main__":
+    # create player obj and show media info
+    player = Player(args[0])
+    show_track_info(player.media_load_info, player.tag)
+    player.play()
+    main()
