@@ -6,6 +6,10 @@ from rich.console import Console
 from rich import print
 import os
 
+# default track play numbers
+current_track = 1
+all_tacks_sum = 1
+
 
 def handle_dirs(path: str) -> list:
     """
@@ -35,7 +39,10 @@ def get_status_data() -> str:
     else:
         symbol_play = u"\u23f8"
 
-    return f"[bold green]{current_time} <=> {player.get_total_media_time()} " + symbol_play  # noqa
+    return (
+        f"[bold green]{current_time} <=> {player.get_total_media_time()} "
+        + f"{current_track}/{all_tacks_sum} "
+        + symbol_play)
 
 
 def main() -> None:
@@ -75,6 +82,7 @@ if __name__ == "__main__":
     # if user input is a dir
     if os.path.isdir(args[0]):
         tracks = handle_dirs(args[0])
+        all_tacks_sum = len(tracks)
         for track in tracks:
             console.clear()
             player = Player(track)
@@ -84,6 +92,7 @@ if __name__ == "__main__":
                 path_file,
             )
             main()
+            current_track += 1
     else:
         # if user input just a music
         player = Player(args[0])
