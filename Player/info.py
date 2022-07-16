@@ -6,6 +6,13 @@ terminal_column = get_terminal_size().columns
 
 
 def show_track_info(load_info_obj, tag, path_file):
+    """
+    show track information
+
+    params : `load_info_obj` : eyed3 load object
+    params : `tag` : eyed3 tag object
+    params : `path_file` : music path file
+    """
 
     load_info = load_info_obj
     try:
@@ -24,7 +31,6 @@ def show_track_info(load_info_obj, tag, path_file):
         print(Panel(track_information, title="Track Information"))
     except AttributeError:
         print(Panel(track_information, title="Track Information"))
-
 
     lyrics = u"".join([i.text for i in tag.lyrics])
     print(Panel(str(lyrics), title="Lyrics"))
