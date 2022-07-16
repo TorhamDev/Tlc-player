@@ -4,14 +4,7 @@ from Player.info import show_track_info
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
-from utils import clear_terminal
 import os
-
-clear_terminal()
-parser = OptionParser()
-(options, args) = parser.parse_args()
-
-console = Console()
 
 
 def handle_dirs(path: str) -> list:
@@ -66,7 +59,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-
+    parser = OptionParser()
+    (options, args) = parser.parse_args()
+    console = Console()
+    console.clear()
     if len(args) == 0:
         print(
             "[bold red]You must specify a path to file or dir like:[/bold red][blue]"
@@ -76,12 +72,11 @@ if __name__ == "__main__":
         quit()
 
     path_file = path_file = args[0]
-
     # if user input is a dir
     if os.path.isdir(args[0]):
         tracks = handle_dirs(args[0])
         for track in tracks:
-            clear_terminal()
+            console.clear()
             player = Player(track)
             show_track_info(
                 player.media_load_info,
