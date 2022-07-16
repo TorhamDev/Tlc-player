@@ -19,7 +19,7 @@ python3 tlc.py <music-path>
 - [X] Improve Core
 - [X] Improve Info utils
 - [ ] Complete Readme
-- [ ] Add music play number in dir input
+- [X] Add music play number in dir input
 - [ ] Add keyboard shortcut handler (pause, play, next ..)
 
 # License
