@@ -4,14 +4,11 @@ from Player.info import show_track_info
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
-from utils import clear_terminal
 import os
 
-clear_terminal()
-parser = OptionParser()
-(options, args) = parser.parse_args()
-
-console = Console()
+# default track play numbers
+current_track = 1
+all_tacks_sum = 1
 
 
 def handle_dirs(path: str) -> list:
@@ -42,7 +39,10 @@ def get_status_data() -> str:
     else:
         symbol_play = u"\u23f8"
 
-    return f"[bold green]{current_time} <=> {player.get_total_media_time()} " + symbol_play  # noqa
+    return (
+        f"[bold green]{current_time} <=> {player.get_total_media_time()} "
+        + f"{current_track}/{all_tacks_sum} "
+        + symbol_play)
 
 
 def main() -> None:
@@ -66,7 +66,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-
+    parser = OptionParser()
+    (options, args) = parser.parse_args()
+    console = Console()
+    console.clear()
     if len(args) == 0:
         print(
             "[bold red]You must specify a path to file or dir like:[/bold red][blue]"
@@ -76,12 +79,12 @@ if __name__ == "__main__":
         quit()
 
     path_file = path_file = args[0]
-
     # if user input is a dir
     if os.path.isdir(args[0]):
         tracks = handle_dirs(args[0])
+        all_tacks_sum = len(tracks)
         for track in tracks:
-            clear_terminal()
+            console.clear()
             player = Player(track)
             show_track_info(
                 player.media_load_info,
@@ -89,6 +92,7 @@ if __name__ == "__main__":
                 path_file,
             )
             main()
+            current_track += 1
     else:
         # if user input just a music
         player = Player(args[0])
