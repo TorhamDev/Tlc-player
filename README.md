@@ -1,3 +1,4 @@
+![Version](https://img.shields.io/badge/version-0.1.0-blue)
 # TLC-player
 Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
 
@@ -24,6 +25,4 @@ python3 tlc.py <music-path>
 
 # License
 This project is licensed under the MIT license found in the LICENSE file in the root directory of this repository.
-
-Version : Alpha
 
