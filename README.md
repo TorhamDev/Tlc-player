@@ -1,6 +1,5 @@
-Version : Alpha
-
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
+![Version](https://img.shields.io/badge/version-0.1.0-blue)  
 
 
 # TLC-player
