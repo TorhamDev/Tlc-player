@@ -22,9 +22,9 @@ def on_press(key) -> None:
     If the total of pressed keys is equal to 3
     it will be sent to keyboard_shortcut_handler for checking
 
-    params : key : key preesed
+    params : key : key pressed
 
-    retrun None
+    return None
     """
     if len(keys_currently_pressed) == 3:
         keys_currently_pressed.clear()
@@ -38,11 +38,11 @@ def on_press(key) -> None:
 
 def handle_dirs(path: str) -> list:
     """
-    retrun list of a dir file
+    return list of a dir file
 
     params : `path` : dir path
 
-    retrun : `list file in target dir`
+    return : `list file in target dir`
     """
 
     tracks = [os.path.join(path, i) for i in os.listdir(path)]
