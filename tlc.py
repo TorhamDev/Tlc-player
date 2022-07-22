@@ -28,3 +28,19 @@ def onPress(key) -> None:
 
     if len(keysCurrentlyPressed) == 3:
         keyboardShortcutHandler(player, keysCurrentlyPressed)
+
+def handle_dirs(path: str) -> list:
+    """
+    Returns music tracks from a target dir
+
+    Params : `path` : dir path
+
+    Retruns : `music tracks in target dir`
+    """
+
+    tracks = [os.path.join(path, i) for i in os.listdir(path)]
+    # To remove possible dirs
+    tracks = [i for i in filter(lambda x: x if os.path.isfile(x) else None, tracks)]  # noqa
+    return tracks
+
+
