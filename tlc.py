@@ -1,5 +1,5 @@
 from time import sleep
-from player import Player
+from Player.player import Player
 from utils.info import show_track_info
 from utils.keyboard_shortcut import keyboard_shortcut_handler
 from optparse import OptionParser
