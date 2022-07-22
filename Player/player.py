@@ -1,4 +1,4 @@
-from eyed3 import id3,load
+from eyed3 import id3, load
 import eyed3
 import datetime
 import vlc
@@ -9,7 +9,8 @@ class Player():
     """
     Player object to control music.
     """
-    def __init__(self,media_path) -> None:
+
+    def __init__(self, media_path) -> None:
         self.media_path = media_path
         self.media_player = vlc.MediaPlayer()
         self.media = vlc.Media(self.media_path)
@@ -17,7 +18,10 @@ class Player():
         self.tag = id3.Tag()
         self.tag.parse(self.media_path)
         self.media_load_info = load(self.media_path)
-        self.is_played,self.is_paused,self.is_stopped = False,False,False
+        self.is_played = False
+        self.is_paused = False
+        self.is_stopped = False
+
     def start(self) -> None:
         """
         Plays Music.
@@ -30,26 +34,40 @@ class Player():
                 print("Unable to play media")
                 exit()
             count += 1
-            
-        self.is_played,self.is_paused,self.is_stopped = True,False,False
+
+        self.is_played = True
+        self.is_paused = False
+        self.is_stopped = False
 
     def pause(self) -> None:
         """
         Pauses Music, if it is already paused, it will resume it.
         """
         self.media_player.pause()
-        self.is_played,self.is_paused,self.is_stopped = True,True,False
+        self.is_played = True
+        self.is_paused = True
+        self.is_stopped = False
 
     def stop(self) -> None:
         """
         Stops Music.
         """
         self.media_player.stop()
-        self.is_played,self.is_paused,self.is_stopped = False,False,True
+        self.is_played = False
+        self.is_paused = False
+        self.is_stopped = True
 
     def get_current_playtime(self) -> str:
+        """
+        get current music playtime as time string like : 00:00:00
+
+        retrun : `playtime string`
+        """
         milliseconds_playtime = self.media_player.get_time()
-        currentTime = str(datetime.timedelta(milliseconds=milliseconds_playtime)).split('.')[0]  # noqa
+        currentTime = str(datetime.timedelta(
+            milliseconds=milliseconds_playtime
+        )).split('.')[0]
+
         return currentTime
 
     def get_total_media_time(self) -> str:
@@ -63,13 +81,23 @@ class Player():
             return str(datetime.timedelta(seconds=time_secs)).split('.')[0]
         except AttributeError:
             return "00:00:00"
-    
+
     def is_music_finished(self) -> bool:
+        """
+        check if current music in finished
+
+        retrun : `True if finished`
+        """
         if self.media_player.get_state() == vlc.State.Ended:
             return True
         return False
-    
+
     def is_music_paused(self) -> bool:
+        """
+        check if current music in paused
+
+        retrun : `True if paused`
+        """
         if self.media.get_state() == vlc.State.Paused:
             return True
         return False

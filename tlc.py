@@ -13,7 +13,7 @@ all_tracks_sum = 1
 keys_currently_pressed = []
 
 
-def on_press(key,player) -> None:
+def on_press(key, player) -> None:
     """
     Pressed keyboard keys
     If the total of pressed keys is equal to 3
@@ -30,6 +30,7 @@ def on_press(key,player) -> None:
     if len(keys_currently_pressed) == 3:
         keyboard_shortcut_handler(player, keys_currently_pressed)
 
+
 def handle_dirs(path: str) -> list:
     """
     Returns music tracks from a target dir
@@ -44,7 +45,8 @@ def handle_dirs(path: str) -> list:
     tracks = [i for i in filter(lambda x: x if os.path.isfile(x) else None, tracks)]  # noqa
     return tracks
 
-def get_status_data(player,all_tracks_sum,current_track) -> str:
+
+def get_status_data(player, all_tracks_sum, current_track) -> str:
     """
     Returns play data status
     params: `player` : player object
@@ -62,14 +64,16 @@ def get_status_data(player,all_tracks_sum,current_track) -> str:
         + f"{current_track}/{all_tracks_sum} "
         + symbol_play)
 
-def play_for_files(path:str):
+
+def play_for_files(path: str):
     """ 
     Plays tracks for music paths
     params : `path` : music path
     """
     main(path)
 
-def play_for_dirs(path:str):
+
+def play_for_dirs(path: str):
     """
     Plays tracks for dirs
     params : `path` : directory
@@ -79,10 +83,11 @@ def play_for_dirs(path:str):
     current_track = 1
     for track in tracks:
         console.clear()
-        main(track,all_tracks_sum,current_track)
+        main(track, all_tracks_sum, current_track)
         current_track += 1
 
-def main(track,track_sum:int=1,current_track:int=1):
+
+def main(track, track_sum: int = 1, current_track: int = 1):
     """ Main function for tlc
     params: `track` : Music path
     """
@@ -90,15 +95,22 @@ def main(track,track_sum:int=1,current_track:int=1):
     show_track_info(player.media_load_info, player.tag, path_file)
     player.start()
     try:
-        with keyboard.Listener(on_press=lambda event: on_press(event,player)) as listener:
-            with console.status(get_status_data(player,track_sum,current_track)) as status:
+        with keyboard.Listener(on_press=lambda event: on_press(event, player)) as listener:
+            with console.status(get_status_data(player, track_sum, current_track)) as status:
                 while not player.is_music_finished():
-                    status.update(get_status_data(player,track_sum,current_track))
+                    status.update(
+                        get_status_data(
+                            player,
+                            track_sum,
+                            current_track
+                        )
+                    )
                     sleep(0.6)
             listener.stop()
     except KeyboardInterrupt:
         print("Bye ! :vulcan_salute:")
         quit()
+
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -115,4 +127,5 @@ if __name__ == "__main__":
     path_file = path_file = args[0]
     if os.path.isdir(args[0]):
         play_for_dirs(args[0])
+
     play_for_files(args[0])
