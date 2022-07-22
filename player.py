@@ -45,7 +45,7 @@ class Player():
         currentTime = str(datetime.timedelta(milliseconds=milliseconds_playtime)).split('.')[0]  # noqa
         return currentTime
 
-    def get_total_media_time(self) -> str:
+    def getTotalMediaTime(self) -> str:
         """
         Gets total media time
 
@@ -57,3 +57,4 @@ class Player():
             return str(datetime.timedelta(seconds=timeSecs)).split('.')[0]
         except AttributeError:
             return "00:00:00"
+
