@@ -1,18 +1,19 @@
 from time import sleep
-from Player.core import Player
+from player import Player
 from utils.info import show_track_info
 from utils.keyboard_shortcut import keyboard_shortcut_handler
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
-from pynput import keybord
+from pynput import keyboard
 import os
 # Default track play numbers
-currentTrack = 1
-allTrackSum = 1
-keysCurrentlyPressed = []
+current_track = 1
+all_tracks_sum = 1
+keys_currently_pressed = []
 
-def onPress(key) -> None:
+
+def on_press(key,player) -> None:
     """
     Pressed keyboard keys
     If the total of pressed keys is equal to 3
@@ -20,16 +21,16 @@ def onPress(key) -> None:
     params : key : key preesed
     retrun None
     """
-    if len(keysCurrentlyPressed) == 3:
-        keysCurrentlyPressed.clear()
+    if len(keys_currently_pressed) == 3:
+        keys_currently_pressed.clear()
 
-    if key not in keysCurrentlyPressed:
-        keysCurrentlyPressed.append(key)
+    if key not in keys_currently_pressed:
+        keys_currently_pressed.append(key)
 
-    if len(keysCurrentlyPressed) == 3:
-        keyboardShortcutHandler(player, keysCurrentlyPressed)
+    if len(keys_currently_pressed) == 3:
+        keyboard_shortcut_handler(player, keys_currently_pressed)
 
-def handleDirs(path: str) -> list:
+def handle_dirs(path: str) -> list:
     """
     Returns music tracks from a target dir
 
@@ -43,50 +44,61 @@ def handleDirs(path: str) -> list:
     tracks = [i for i in filter(lambda x: x if os.path.isfile(x) else None, tracks)]  # noqa
     return tracks
 
-def getStatusData() -> str:
+def get_status_data(player,all_tracks_sum,current_track) -> str:
     """
     Returns play data status
-
+    params: `player` : player object
     return : `play data status string`
     """
 
     current_time = player.get_current_playtime()
-    if player.is_played:
+    if player.is_music_paused():
+        symbol_play = u"\u23f8"
+    else:
         symbol_play = u"\u25b6"
-    symbol_play = u"\u23f8"
 
     return (
         f"[bold green]{current_time} <=> {player.get_total_media_time()} "
-        + f"{current_track}/{all_tacks_sum} "
+        + f"{current_track}/{all_tracks_sum} "
         + symbol_play)
 
-def playForFiles(path:str):
+def play_for_files(path:str):
     """ 
     Plays tracks for music paths
     params : `path` : music path
     """
-    player = Player(path)
-    show_track_info(player.media_load_info, player.tag, path_file)
-    main()
+    main(path)
 
-def playForDirs(path:str):
+def play_for_dirs(path:str):
     """
     Plays tracks for dirs
-
     params : `path` : directory
     """
     tracks = handle_dirs(path)
-    allTracksSum = len(tracks)
+    all_tracks_sum = len(tracks)
+    current_track = 1
     for track in tracks:
         console.clear()
-        player = Player(track)
-        show_track_info(
-            player.media_load_info,
-            player.tag,
-            path_file,
-        )
-        main()
+        main(track,all_tracks_sum,current_track)
         current_track += 1
+
+def main(track,track_sum:int=1,current_track:int=1):
+    """ Main function for tlc
+    params: `track` : Music path
+    """
+    player = Player(track)
+    show_track_info(player.media_load_info, player.tag, path_file)
+    player.start()
+    try:
+        with keyboard.Listener(on_press=lambda event: on_press(event,player)) as listener:
+            with console.status(get_status_data(player,track_sum,current_track)) as status:
+                while not player.is_music_finished():
+                    status.update(get_status_data(player,track_sum,current_track))
+                    sleep(0.6)
+            listener.stop()
+    except KeyboardInterrupt:
+        print("Bye ! :vulcan_salute:")
+        quit()
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -102,5 +114,5 @@ if __name__ == "__main__":
         quit()
     path_file = path_file = args[0]
     if os.path.isdir(args[0]):
-        playForDirs(args[0])
-    playforFiles(args[0])
+        play_for_dirs(args[0])
+    play_for_files(args[0])
