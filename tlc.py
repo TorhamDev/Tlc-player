@@ -29,7 +29,7 @@ def onPress(key) -> None:
     if len(keysCurrentlyPressed) == 3:
         keyboardShortcutHandler(player, keysCurrentlyPressed)
 
-def handle_dirs(path: str) -> list:
+def handleDirs(path: str) -> list:
     """
     Returns music tracks from a target dir
 
