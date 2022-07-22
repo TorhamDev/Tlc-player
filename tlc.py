@@ -4,11 +4,36 @@ from Player.info import show_track_info
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
+from pynput import keyboard
+from utils.keyboard_shortcut import keyboard_shortcut_handler
 import os
 
 # default track play numbers
 current_track = 1
 all_tacks_sum = 1
+
+
+keys_currently_pressed = []
+
+
+def on_press(key) -> None:
+    """
+    on keyboard keys pressed
+    If the total of pressed keys is equal to 3
+    it will be sent to keyboard_shortcut_handler for checking
+
+    params : key : key preesed
+
+    retrun None
+    """
+    if len(keys_currently_pressed) == 3:
+        keys_currently_pressed.clear()
+
+    if key not in keys_currently_pressed:
+        keys_currently_pressed.append(key)
+
+    if len(keys_currently_pressed) == 3:
+        keyboard_shortcut_handler(player, keys_currently_pressed)
 
 
 def handle_dirs(path: str) -> list:
@@ -54,12 +79,20 @@ def main() -> None:
 
     player.play()
     try:
-        with console.status(get_status_data()) as status:
-            while player.is_played:
-                player.check_status()
-                sleep(0.6)
-                status.update(get_status_data())
-            print("\nEnd :sunglasses:")
+        # Collect events until released
+        with keyboard.Listener(on_press=on_press) as listener:
+
+            with console.status(get_status_data()) as status:
+
+                while not player.is_stoped:
+                    player.check_status()
+                    sleep(0.6)
+                    status.update(get_status_data())
+
+                print("\nEnd :sunglasses:")
+
+            listener.join()
+
     except KeyboardInterrupt:
         print('Bye! :vulcan_salute:')
         quit()

@@ -67,7 +67,6 @@ class Player(object):
         else:
             self.is_played = False
             self.is_stoped = True
-
     def done(self) -> bool:
         """
         stop media
