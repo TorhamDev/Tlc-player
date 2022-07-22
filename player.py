@@ -40,4 +40,7 @@ class Player():
         self.media_player.stop()
         self.is_played,self.is_paused,self.is_stopped = False,False,True
 
-
+    def getCurrentPlaytime(self):
+        millisecondsPlaytime = self.media_player.get_time()
+        currentTime = str(datetime.timedelta(milliseconds=milliseconds_playtime)).split('.')[0]  # noqa
+        return currentTime
