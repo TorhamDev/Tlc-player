@@ -1,29 +1,24 @@
 from time import sleep
-from Player.core import Player
-from Player.info import show_track_info
+from Player.player import Player
+from utils.info import show_track_info
+from utils.keyboard_shortcut import keyboard_shortcut_handler
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
 from pynput import keyboard
-from utils.keyboard_shortcut import keyboard_shortcut_handler
 import os
-
-# default track play numbers
+# Default track play numbers
 current_track = 1
-all_tacks_sum = 1
-
-
+all_tracks_sum = 1
 keys_currently_pressed = []
 
 
-def on_press(key) -> None:
+def on_press(key,player) -> None:
     """
-    on keyboard keys pressed
+    Pressed keyboard keys
     If the total of pressed keys is equal to 3
-    it will be sent to keyboard_shortcut_handler for checking
-
+    it will be sent to the keyboardShortcutHandler for handlation
     params : key : key preesed
-
     retrun None
     """
     if len(keys_currently_pressed) == 3:
@@ -35,14 +30,13 @@ def on_press(key) -> None:
     if len(keys_currently_pressed) == 3:
         keyboard_shortcut_handler(player, keys_currently_pressed)
 
-
 def handle_dirs(path: str) -> list:
     """
-    retrun list of a dir file
+    Returns music tracks from a target dir
 
     params : `path` : dir path
 
-    retrun : `list file in target dir`
+    retrun : `music tracks in target dir`
     """
 
     tracks = [os.path.join(path, i) for i in os.listdir(path)]
@@ -50,57 +44,65 @@ def handle_dirs(path: str) -> list:
     tracks = [i for i in filter(lambda x: x if os.path.isfile(x) else None, tracks)]  # noqa
     return tracks
 
-
-def get_status_data() -> str:
+def get_status_data(player,all_tracks_sum,current_track) -> str:
     """
-    get status play data
-
-    return : `play status string`
+    Returns play data status
+    params: `player` : player object
+    return : `play data status string`
     """
 
     current_time = player.get_current_playtime()
-    if player.is_played:
-        symbol_play = u"\u25b6"
-    else:
+    if player.is_music_paused():
         symbol_play = u"\u23f8"
+    else:
+        symbol_play = u"\u25b6"
 
     return (
         f"[bold green]{current_time} <=> {player.get_total_media_time()} "
-        + f"{current_track}/{all_tacks_sum} "
+        + f"{current_track}/{all_tracks_sum} "
         + symbol_play)
 
-
-def main() -> None:
+def play_for_files(path:str):
+    """ 
+    Plays tracks for music paths
+    params : `path` : music path
     """
-    main function for run music
+    main(path)
 
-    return : `None`
+def play_for_dirs(path:str):
     """
+    Plays tracks for dirs
+    params : `path` : directory
+    """
+    tracks = handle_dirs(path)
+    all_tracks_sum = len(tracks)
+    current_track = 1
+    for track in tracks:
+        console.clear()
+        main(track,all_tracks_sum,current_track)
+        current_track += 1
 
-    player.play()
+def main(track,track_sum:int=1,current_track:int=1):
+    """ Main function for tlc
+    params: `track` : Music path
+    """
+    player = Player(track)
+    show_track_info(player.media_load_info, player.tag, path_file)
+    player.start()
     try:
-        # Collect events until released
-        with keyboard.Listener(on_press=on_press) as listener:
-
-            with console.status(get_status_data()) as status:
-
-                while not player.is_stoped:
-                    player.check_status()
+        with keyboard.Listener(on_press=lambda event: on_press(event,player)) as listener:
+            with console.status(get_status_data(player,track_sum,current_track)) as status:
+                while not player.is_music_finished():
+                    status.update(get_status_data(player,track_sum,current_track))
                     sleep(0.6)
-                    status.update(get_status_data())
-
-                print("\nEnd :sunglasses:")
-
-            listener.join()
-
+            listener.stop()
     except KeyboardInterrupt:
-        print('Bye! :vulcan_salute:')
+        print("Bye ! :vulcan_salute:")
         quit()
-
 
 if __name__ == "__main__":
     parser = OptionParser()
-    (options, args) = parser.parse_args()
+    (option, args) = parser.parse_args()
     console = Console()
     console.clear()
     if len(args) == 0:
@@ -110,24 +112,7 @@ if __name__ == "__main__":
             "or tlc.py ~/Music/ [/blue]"
         )
         quit()
-
     path_file = path_file = args[0]
-    # if user input is a dir
     if os.path.isdir(args[0]):
-        tracks = handle_dirs(args[0])
-        all_tacks_sum = len(tracks)
-        for track in tracks:
-            console.clear()
-            player = Player(track)
-            show_track_info(
-                player.media_load_info,
-                player.tag,
-                path_file,
-            )
-            main()
-            current_track += 1
-    else:
-        # if user input just a music
-        player = Player(args[0])
-        show_track_info(player.media_load_info, player.tag, path_file)
-        main()
+        play_for_dirs(args[0])
+    play_for_files(args[0])
