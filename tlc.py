@@ -1,12 +1,13 @@
 from time import sleep
 from Player.player import Player
 from utils.info import show_track_info
-from utils.keyboard_shortcut import keyboard_shortcut_handler
+from utils.keyboard_shortcut import keyboard_shortcut_handler, go_next_music
 from optparse import OptionParser
 from rich.console import Console
 from rich import print
 from pynput import keyboard
 import os
+
 # Default track play numbers
 current_track = 1
 all_tracks_sum = 1
@@ -28,7 +29,10 @@ def on_press(key, player) -> None:
         keys_currently_pressed.append(key)
 
     if len(keys_currently_pressed) == 3:
-        keyboard_shortcut_handler(player, keys_currently_pressed)
+        result = keyboard_shortcut_handler(player, keys_currently_pressed)
+        if result == False:
+            keys_currently_pressed.clear()
+            print(keys_currently_pressed)
 
 
 def handle_dirs(path: str) -> list:
@@ -98,6 +102,11 @@ def main(track, track_sum: int = 1, current_track: int = 1):
         with keyboard.Listener(on_press=lambda event: on_press(event, player)) as listener:
             with console.status(get_status_data(player, track_sum, current_track)) as status:
                 while not player.is_music_finished():
+
+                    if go_next_music():
+                        player.stop()
+                        break
+
                     status.update(
                         get_status_data(
                             player,
