@@ -24,7 +24,8 @@ python3 tlc.py <music-path>
 - [X] Improve Info utils
 - [X] Add music play number in dir input
 - [X] Add keyboard shortcut handler for pause, play
-- [ ] Add keyboard shortcut handler for next
+- [X] Add keyboard shortcut handler for next
+- [ ] Fix shortcuts conflict problem
 - [ ] Add shortcut info option
 - [ ] Complete Readme
 
