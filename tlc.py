@@ -32,7 +32,7 @@ def on_press(key, player) -> None:
         result = keyboard_shortcut_handler(player, keys_currently_pressed)
         if result == False:
             keys_currently_pressed.clear()
-            print(keys_currently_pressed)
+            #print(keys_currently_pressed)
 
 
 def handle_dirs(path: str) -> list:
