@@ -1,7 +1,11 @@
-from pynput.keyboard import Key
+from config import FIRST_KEY, SECOND_KEY, PAUSE_BUTTON, NEXT_BUTTON
 
 
 class GoNext(object):
+    """
+    an object for saving next value
+    """
+
     def __init__(self, go_next=None) -> None:
         self.go_next = go_next
 
@@ -24,20 +28,26 @@ def keyboard_shortcut_handler(player_object, key_pressed: list) -> None:
 
     retru : None
     """
-    if key_pressed[0] == Key.ctrl and str(key_pressed[1]) == "'b'":
-        
+    if key_pressed[0] == FIRST_KEY and str(key_pressed[1]) == f"'{SECOND_KEY}'":
+
         # pause handler
-        if key_pressed[2] == Key.space:
+        if key_pressed[2] == PAUSE_BUTTON:
             player_object.pause()
 
-        elif key_pressed[2] == Key.right:
+        # next handler
+        elif key_pressed[2] == NEXT_BUTTON:
             go_next.go_next = True
-    
+
     else:
         return False
 
 
 def go_next_music() -> bool:
+    """
+    Checking if it is necessary to go to the next music?
+
+    retrun : `True if next`
+    """
     if go_next.get() == False:
         return False
 
