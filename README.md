@@ -3,8 +3,8 @@
 
 
 # TLC-player
-Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
-![picture](https://github.com/SepehrRasouli/Tlc-player/blob/main/pictures/0.png)
+Minimalist,Fast,FOSS,Terminal-Based Music Player !
+![picture](https://github.com/SepehrRasouli/Tlc-player/blob/main/pictures/1.png)
 
 ## Usage :
 * Installing dependencies :
