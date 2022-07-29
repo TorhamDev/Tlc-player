@@ -2,7 +2,27 @@ from rich import print
 from rich.panel import Panel
 from os import get_terminal_size
 import datetime
+
+from config import FIRST_KEY, SECOND_KEY, PAUSE_BUTTON, NEXT_BUTTON
+
+
 terminal_column = get_terminal_size().columns
+
+
+def show_shortcut_data():
+    """
+    show shortcut info
+
+    retrun : `print keyboard shortcut on rich panel` 
+    """
+    info = ""
+
+    info += f"[deep_sky_blue1]First key[/deep_sky_blue1] : {str(FIRST_KEY).split('.')[1].upper()}\n"
+    info += f"[deep_sky_blue1]Second key[/deep_sky_blue1] : {SECOND_KEY.upper()}\n"
+    info += f"[deep_sky_blue1]Pause button[/deep_sky_blue1] : {str(PAUSE_BUTTON).split('.')[1].upper()}\n"
+    info += f"[deep_sky_blue1]Next button[/deep_sky_blue1] : {str(NEXT_BUTTON).split('.')[1].upper()}\n"
+
+    print(Panel(info, title="Shortcut Information"))
 
 
 def show_track_info(load_info_obj, tag, path_file):
@@ -34,3 +54,5 @@ def show_track_info(load_info_obj, tag, path_file):
 
     lyrics = u"".join([i.text for i in tag.lyrics])
     print(Panel(str(lyrics), title="Lyrics"))
+
+    show_shortcut_data()
