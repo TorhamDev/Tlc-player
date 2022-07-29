@@ -5,8 +5,6 @@
 # TLC-player
 Minimalist, Fast, FOSS, Terminal-Based Music Player That can give you Your loved music's lyrics, Right at your terminal !
 
-![picture](https://github.com/SepehrRasouli/Tlc-player/blob/main/pictures/1.png)
-
 ## Usage :
 * Installing dependencies :
 ```bash
