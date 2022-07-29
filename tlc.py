@@ -32,7 +32,7 @@ def on_press(key, player) -> None:
         result = keyboard_shortcut_handler(player, keys_currently_pressed)
         if result == False:
             keys_currently_pressed.clear()
-            print(keys_currently_pressed)
+            #print(keys_currently_pressed)
 
 
 def handle_dirs(path: str) -> list:
@@ -86,7 +86,6 @@ def play_for_dirs(path: str):
     all_tracks_sum = len(tracks)
     current_track = 1
     for track in tracks:
-        console.clear()
         main(track, all_tracks_sum, current_track)
         current_track += 1
 
@@ -96,26 +95,26 @@ def main(track, track_sum: int = 1, current_track: int = 1):
     params: `track` : Music path
     """
     player = Player(track)
-    show_track_info(player.media_load_info, player.tag, path_file)
     player.start()
     try:
-        with keyboard.Listener(on_press=lambda event: on_press(event, player)) as listener:
-            with console.status(get_status_data(player, track_sum, current_track)) as status:
-                while not player.is_music_finished():
-
-                    if go_next_music():
-                        player.stop()
-                        break
-
-                    status.update(
-                        get_status_data(
-                            player,
-                            track_sum,
-                            current_track
+        with console.screen() as screen:
+            screen.console.clear()
+            show_track_info(player.media_load_info, player.tag, path_file)
+            with keyboard.Listener(on_press=lambda event: on_press(event, player)) as listener:
+                with console.status(get_status_data(player, track_sum, current_track)) as status:
+                    while not player.is_music_finished():
+                        if go_next_music():
+                            player.stop()
+                            break
+                        status.update(
+                            get_status_data(
+                                player,
+                                track_sum,
+                                current_track
+                            )
                         )
-                    )
-                    sleep(0.6)
-            listener.stop()
+                        sleep(0.6)
+                listener.stop()
     except KeyboardInterrupt:
         print("Bye ! :vulcan_salute:")
         quit()
@@ -125,7 +124,6 @@ if __name__ == "__main__":
     parser = OptionParser()
     (option, args) = parser.parse_args()
     console = Console()
-    console.clear()
     if len(args) == 0:
         print(
             "[bold red]You must specify a path to file or dir like:[/bold red][blue]"
