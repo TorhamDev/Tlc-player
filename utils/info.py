@@ -17,10 +17,9 @@ def show_shortcut_data():
     """
     info = ""
 
-    info += f"[deep_sky_blue1]First key[/deep_sky_blue1] : {str(FIRST_KEY).split('.')[1].upper()}\n"
-    info += f"[deep_sky_blue1]Second key[/deep_sky_blue1] : {SECOND_KEY.upper()}\n"
-    info += f"[deep_sky_blue1]Pause button[/deep_sky_blue1] : {str(PAUSE_BUTTON).split('.')[1].upper()}\n"
-    info += f"[deep_sky_blue1]Next button[/deep_sky_blue1] : {str(NEXT_BUTTON).split('.')[1].upper()}\n"
+    info += f"[deep_sky_blue1] {str(FIRST_KEY).split('.')[1].upper()} + {SECOND_KEY.upper()} + : [/deep_sky_blue1]\n"
+    info += f"  [deep_sky_blue1]Pause button[/deep_sky_blue1] : {str(PAUSE_BUTTON).split('.')[1].upper()}\n"
+    info += f"  [deep_sky_blue1]Next button[/deep_sky_blue1] : {str(NEXT_BUTTON).split('.')[1].upper()}\n"
 
     print(Panel(info, title="Shortcut Information"))
 
