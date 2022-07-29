@@ -32,7 +32,6 @@ def on_press(key, player) -> None:
         result = keyboard_shortcut_handler(player, keys_currently_pressed)
         if result == False:
             keys_currently_pressed.clear()
-            #print(keys_currently_pressed)
 
 
 def handle_dirs(path: str) -> list:
@@ -131,6 +130,7 @@ if __name__ == "__main__":
             "or tlc.py ~/Music/ [/blue]"
         )
         quit()
+
     path_file = path_file = args[0]
     if os.path.isdir(args[0]):
         play_for_dirs(args[0])
