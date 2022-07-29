@@ -4,13 +4,14 @@
 
 # TLC-player
 Lightweight, Modern and Fast CLI Music Player with VLC core, written in Python !
+![picture](https://github.com/SepehrRasouli/Tlc-player/blob/main/pictures/0.png)
 
-# Running
-1. Installing dependencies :
+## Usage :
+* Installing dependencies :
 ```bash
 pip3 install -r requirements.txt
 ```
-2. Run TLC with :
+* Run TLC with :
 ```bash 
 python3 tlc.py <music-path>
 ```
